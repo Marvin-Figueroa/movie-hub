@@ -1,11 +1,14 @@
 import { Layout } from 'antd'
 import { Header, Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
+import NavBar from './components/NavBar'
 
 function App() {
   return (
     <Layout style={{ height: '100vh' }}>
-      <Header style={{ backgroundColor: 'tomato' }}>Header</Header>
+      <Header>
+        <NavBar />
+      </Header>
       <Layout>
         <Sider
           trigger={null}

@@ -1,10 +1,17 @@
 import { Flex, Image } from 'antd'
 import logo from '../assets/movie-database-logo.svg'
+import ColorModeSwitch from './ColorModeSwitch'
 
-const NavBar = () => {
+interface Props {
+  darkMode: boolean
+  toggleDarkMode: () => void
+}
+
+const NavBar = ({ darkMode, toggleDarkMode }: Props) => {
   return (
-    <Flex>
-      <Image width={150} src={logo} />
+    <Flex justify='space-between' align='center'>
+      <Image preview={false} width={150} src={logo} />
+      <ColorModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
     </Flex>
   )
 }

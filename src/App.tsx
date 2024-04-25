@@ -3,6 +3,7 @@ import { Header, Content } from 'antd/es/layout/layout'
 import Sider from 'antd/es/layout/Sider'
 import NavBar from './components/NavBar'
 import { useState } from 'react'
+import MovieGrid from './components/MovieGrid'
 
 const { defaultAlgorithm, darkAlgorithm } = theme
 
@@ -31,7 +32,9 @@ function App() {
             width='25%'>
             Sider
           </Sider>
-          <Content style={customStyle}>Content</Content>
+          <Content style={customStyle}>
+            <MovieGrid />
+          </Content>
         </Layout>
       </Layout>
     </ConfigProvider>

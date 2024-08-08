@@ -1,0 +1,39 @@
+import { CanceledError } from "axios";
+import { useState, useEffect } from "react";
+import apiClient from "../services/apiClient";
+
+interface Movie {
+  id: number;
+  title: string;
+}
+
+interface FetchMoviesResponse {
+  page: number;
+  results: Movie[];
+}
+
+export const useMovies = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true);
+
+    apiClient
+      .get<FetchMoviesResponse>("/discover/movie", {
+        signal: controller.signal,
+      })
+      .then((res) => setMovies(res.data.results))
+      .catch((error) => {
+        if (error instanceof CanceledError) return;
+        setError(error.message);
+      })
+      .finally(() => setLoading(false));
+
+    return () => controller.abort();
+  }, []);
+
+  return { movies, error, loading };
+};

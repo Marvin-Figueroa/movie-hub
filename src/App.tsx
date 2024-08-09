@@ -1,22 +1,23 @@
-import { ConfigProvider, Layout, theme } from 'antd'
-import { Header, Content } from 'antd/es/layout/layout'
-import Sider from 'antd/es/layout/Sider'
-import NavBar from './components/NavBar'
-import { useState } from 'react'
-import MovieGrid from './components/MovieGrid'
+import { ConfigProvider, Layout, theme } from "antd";
+import { Header, Content } from "antd/es/layout/layout";
+import Sider from "antd/es/layout/Sider";
+import NavBar from "./components/NavBar";
+import { useState } from "react";
+import MovieGrid from "./components/MovieGrid";
 
-const { defaultAlgorithm, darkAlgorithm } = theme
+const { defaultAlgorithm, darkAlgorithm } = theme;
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
-  const customStyle = { backgroundColor: darkMode ? '#0d253f' : '#fff' }
+  const [darkMode, setDarkMode] = useState(false);
+  const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
 
   return (
     <ConfigProvider
       theme={{
-        algorithm: darkMode ? darkAlgorithm : defaultAlgorithm
-      }}>
-      <Layout style={{ height: '100vh' }}>
+        algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
+      }}
+    >
+      <Layout>
         <Header style={customStyle}>
           <NavBar
             darkMode={darkMode}
@@ -27,19 +28,19 @@ function App() {
           <Sider
             style={customStyle}
             trigger={null}
-            breakpoint='sm'
+            breakpoint="sm"
             collapsedWidth={0}
-            width='25%'>
+            width="25%"
+          >
             Sider
           </Sider>
-          <Content style={customStyle}>
+          <Content style={{ ...customStyle, padding: "24px" }}>
             <MovieGrid />
           </Content>
         </Layout>
       </Layout>
     </ConfigProvider>
-  )
+  );
 }
 
-export default App
-
+export default App;

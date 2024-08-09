@@ -1,5 +1,6 @@
-import { Spin, Typography } from "antd";
+import { Col, Row, Spin, Typography } from "antd";
 import { useMovies } from "../hooks/useMovies";
+import { MovieCard } from "./MovieCard";
 
 const { Text } = Typography;
 
@@ -10,11 +11,14 @@ const MovieGrid = () => {
     <>
       {loading && <Spin size="large" />}
       {error && <Text type="danger">{error}</Text>}
-      <ul>
+
+      <Row justify="start" gutter={[32, 32]}>
         {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
+          <Col xs={24} md={12} xl={8} xxl={6} key={movie.id}>
+            <MovieCard movie={movie} />
+          </Col>
         ))}
-      </ul>
+      </Row>
     </>
   );
 };

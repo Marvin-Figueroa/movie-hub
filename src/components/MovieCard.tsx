@@ -3,6 +3,7 @@ import { Card } from "antd";
 const { Meta } = Card;
 
 import { Movie } from "../hooks/useMovies";
+import VoteScore from "./VoteScore";
 
 interface Props {
   movie: Movie;
@@ -21,7 +22,15 @@ export const MovieCard = ({ movie }: Props) => {
         />
       }
     >
-      <Meta title={movie.title} description={movie.release_date} />
+      <Meta
+        title={movie.title}
+        description={
+          <>
+            <p>{movie.release_date}</p>
+            <VoteScore score={movie.vote_average} />
+          </>
+        }
+      />
     </Card>
   );
 };

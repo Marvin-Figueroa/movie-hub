@@ -29,12 +29,15 @@ export const useMovies = () => {
       .get<FetchMoviesResponse>("/discover/movie", {
         signal: controller.signal,
       })
-      .then((res) => setMovies(res.data.results))
+      .then((res) => {
+        setMovies(res.data.results);
+        setLoading(false);
+      })
       .catch((error) => {
         if (error instanceof CanceledError) return;
         setError(error.message);
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
 
     return () => controller.abort();
   }, []);

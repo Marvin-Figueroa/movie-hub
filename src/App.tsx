@@ -4,6 +4,7 @@ import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
 import { useState } from "react";
 import MovieGrid from "./components/MovieGrid";
+import GenreList from "./components/GenreList";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -26,13 +27,13 @@ function App() {
         </Header>
         <Layout>
           <Sider
-            style={customStyle}
+            style={{ ...customStyle, padding: "1rem" }}
             trigger={null}
             breakpoint="sm"
             collapsedWidth={0}
             width="25%"
           >
-            Sider
+            <GenreList />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
             <MovieGrid />

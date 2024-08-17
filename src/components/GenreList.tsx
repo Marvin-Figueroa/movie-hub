@@ -2,10 +2,11 @@ import { List, Image, Space, Button } from "antd";
 import { useGenres } from "../hooks/useGenres";
 
 interface Props {
+  selectedGenre: number;
   onSelectGenre: (genre: number) => void;
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data: genres } = useGenres();
 
   return (
@@ -27,7 +28,12 @@ const GenreList = ({ onSelectGenre }: Props) => {
               size="large"
               onClick={() => onSelectGenre(genre.id)}
               type="link"
-              style={{ color: "#15B7DB" }}
+              style={{
+                color: "#15B7DB",
+                fontWeight: `${
+                  selectedGenre === genre.id ? "bolder" : "normal"
+                }`,
+              }}
             >
               {genre.name}
             </Button>

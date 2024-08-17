@@ -44,7 +44,10 @@ function App() {
             collapsedWidth={0}
             width="25%"
           >
-            <GenreList onSelectGenre={handleSelectGenre} />
+            <GenreList
+              onSelectGenre={handleSelectGenre}
+              selectedGenre={movieQuery.with_genres}
+            />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
             <MovieGrid movieQuery={movieQuery} />

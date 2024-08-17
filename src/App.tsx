@@ -8,9 +8,20 @@ import GenreList from "./components/GenreList";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
+export interface MovieQuery {
+  with_genres: number;
+}
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
+  const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
+
+  const handleSelectGenre = (genre: number) =>
+    setMovieQuery((prevMovieQuery) => ({
+      ...prevMovieQuery,
+      with_genres: genre,
+    }));
 
   return (
     <ConfigProvider
@@ -33,10 +44,10 @@ function App() {
             collapsedWidth={0}
             width="25%"
           >
-            <GenreList />
+            <GenreList onSelectGenre={handleSelectGenre} />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
-            <MovieGrid />
+            <MovieGrid movieQuery={movieQuery} />
           </Content>
         </Layout>
       </Layout>

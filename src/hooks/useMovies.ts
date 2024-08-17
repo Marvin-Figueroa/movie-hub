@@ -1,3 +1,4 @@
+import { MovieQuery } from "../App";
 import { useData } from "./useData";
 
 export interface Movie {
@@ -14,8 +15,12 @@ export interface FetchMoviesResponse {
   results: Movie[];
 }
 
-export const useMovies = () =>
+export const useMovies = (movieQuery: MovieQuery) =>
   useData<FetchMoviesResponse, Movie>(
     "/discover/movie",
-    (response) => response.results
+    (response) => response.results,
+    {
+      params: { ...movieQuery },
+    },
+    [movieQuery.with_genres]
   );

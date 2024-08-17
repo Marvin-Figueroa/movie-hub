@@ -2,13 +2,18 @@ import { Col, Row, Typography } from "antd";
 import { useMovies } from "../hooks/useMovies";
 import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
+import { MovieQuery } from "../App";
 
 const { Text } = Typography;
 
+interface Props {
+  movieQuery: MovieQuery;
+}
+
 const skeletons = [1, 2, 3, 4, 5, 6];
 
-const MovieGrid = () => {
-  const { data: movies, error, loading } = useMovies();
+const MovieGrid = ({ movieQuery }: Props) => {
+  const { data: movies, error, loading } = useMovies(movieQuery);
 
   return (
     <>

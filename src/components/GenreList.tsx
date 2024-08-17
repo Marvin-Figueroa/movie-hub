@@ -2,7 +2,7 @@ import { List, Spin } from "antd";
 import { useGenres } from "../hooks/useGenres";
 
 const GenreList = () => {
-  const { genres, loading } = useGenres();
+  const { data: genres, loading } = useGenres();
 
   return loading ? (
     <Spin size="large" />

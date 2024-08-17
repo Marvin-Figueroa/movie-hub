@@ -1,10 +1,11 @@
-import { ConfigProvider, Layout, theme } from "antd";
+import { ConfigProvider, Layout, Space, theme } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
 import { useState } from "react";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
+import WatchProviderSelector from "./components/WatchProviderSelector";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -50,6 +51,9 @@ function App() {
             />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
+            <Space size="large" style={{ marginBottom: "15px" }}>
+              <WatchProviderSelector />
+            </Space>
             <MovieGrid movieQuery={movieQuery} />
           </Content>
         </Layout>

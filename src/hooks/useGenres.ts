@@ -1,16 +1,9 @@
-import { useData } from "./useData";
+import genres from "../data/genres";
 
 export interface Genre {
   id: number;
   name: string;
+  imgSrc: string;
 }
 
-export interface FetchGenresResponse {
-  genres: Genre[];
-}
-
-export const useGenres = () =>
-  useData<FetchGenresResponse, Genre>(
-    "/genre/movie/list",
-    (response) => response.genres
-  );
+export const useGenres = () => ({ data: genres, loading: false, error: null });

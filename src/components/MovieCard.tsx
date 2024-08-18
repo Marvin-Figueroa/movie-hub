@@ -16,9 +16,13 @@ export const MovieCard = ({ movie }: Props) => {
       cover={
         <img
           alt={movie.title}
-          src={`${import.meta.env.VITE_APP_API_IMAGES_BASE_URL}/w400/${
+          src={
             movie.poster_path
-          }`}
+              ? `${import.meta.env.VITE_APP_API_IMAGES_BASE_URL}/w400/${
+                  movie.poster_path
+                }`
+              : "/placeholder.jpg"
+          }
         />
       }
     >

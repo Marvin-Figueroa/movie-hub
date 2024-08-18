@@ -21,26 +21,6 @@ function App() {
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
 
-  const handleSelectGenre = (genre: number) =>
-    setMovieQuery((prevMovieQuery) => ({
-      ...prevMovieQuery,
-      with_genres: genre,
-    }));
-
-  const handleSelectWatchProvider = (watchProvider: number) => {
-    setMovieQuery((prevMovieQuery) => ({
-      ...prevMovieQuery,
-      with_watch_providers: watchProvider,
-    }));
-  };
-
-  const handleSelectSort = (sort: string) => {
-    setMovieQuery((prevMovieQuery) => ({
-      ...prevMovieQuery,
-      sort_by: sort,
-    }));
-  };
-
   return (
     <ConfigProvider
       theme={{
@@ -63,17 +43,33 @@ function App() {
             width="25%"
           >
             <GenreList
-              onSelectGenre={handleSelectGenre}
+              onSelectGenre={(genre: number) =>
+                setMovieQuery({
+                  ...movieQuery,
+                  with_genres: genre,
+                })
+              }
               selectedGenre={movieQuery.with_genres}
             />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
-            <Space size="large" style={{ marginBottom: "15px" }}>
+            <Space size="large" style={{ marginBottom: "20px" }}>
               <WatchProviderSelector
-                onSelectWatchProvider={handleSelectWatchProvider}
-                selectedWatchProvider={movieQuery.with_watch_providers}
+                onSelectWatchProvider={(watchProvider: number) =>
+                  setMovieQuery({
+                    ...movieQuery,
+                    with_watch_providers: watchProvider,
+                  })
+                }
               />
-              <SortSelector onSelectSort={handleSelectSort} />
+              <SortSelector
+                onSelectSort={(sort: string) =>
+                  setMovieQuery({
+                    ...movieQuery,
+                    sort_by: sort,
+                  })
+                }
+              />
             </Space>
             <MovieGrid movieQuery={movieQuery} />
           </Content>

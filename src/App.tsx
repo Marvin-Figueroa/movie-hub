@@ -1,4 +1,4 @@
-import { ConfigProvider, Layout, Space, theme } from "antd";
+import { ConfigProvider, DatePicker, Layout, Space, theme } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
@@ -14,6 +14,7 @@ export interface MovieQuery {
   with_genres: number;
   with_watch_providers: number;
   sort_by: string;
+  primary_release_year: number;
 }
 
 function App() {
@@ -69,6 +70,15 @@ function App() {
                     sort_by: sort,
                   })
                 }
+              />
+              <DatePicker
+                onChange={(date) =>
+                  setMovieQuery({
+                    ...movieQuery,
+                    primary_release_year: date.year(),
+                  })
+                }
+                picker="year"
               />
             </Space>
             <MovieGrid movieQuery={movieQuery} />

@@ -28,6 +28,7 @@ export const useMovies = (movieQuery: MovieQuery) =>
           movieQuery.with_watch_providers === -1
             ? null
             : movieQuery.with_watch_providers,
+        primary_release_year: movieQuery.primary_release_year,
       },
     },
     [movieQuery]

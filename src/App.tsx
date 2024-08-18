@@ -6,12 +6,14 @@ import { useState } from "react";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
 import WatchProviderSelector from "./components/WatchProviderSelector";
+import SortSelector from "./components/SortSelector";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
 export interface MovieQuery {
   with_genres: number;
   with_watch_providers: number;
+  sort_by: string;
 }
 
 function App() {
@@ -29,6 +31,13 @@ function App() {
     setMovieQuery((prevMovieQuery) => ({
       ...prevMovieQuery,
       with_watch_providers: watchProvider,
+    }));
+  };
+
+  const handleSelectSort = (sort: string) => {
+    setMovieQuery((prevMovieQuery) => ({
+      ...prevMovieQuery,
+      sort_by: sort,
     }));
   };
 
@@ -64,6 +73,7 @@ function App() {
                 onSelectWatchProvider={handleSelectWatchProvider}
                 selectedWatchProvider={movieQuery.with_watch_providers}
               />
+              <SortSelector onSelectSort={handleSelectSort} />
             </Space>
             <MovieGrid movieQuery={movieQuery} />
           </Content>

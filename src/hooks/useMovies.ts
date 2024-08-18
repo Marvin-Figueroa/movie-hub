@@ -23,6 +23,7 @@ export const useMovies = (movieQuery: MovieQuery) =>
       params: {
         with_genres: movieQuery.with_genres,
         watch_region: "US",
+        sort_by: movieQuery.sort_by,
         with_watch_providers:
           movieQuery.with_watch_providers === -1
             ? null

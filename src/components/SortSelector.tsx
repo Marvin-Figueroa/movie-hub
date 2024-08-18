@@ -2,10 +2,9 @@ import { Select } from "antd";
 
 interface Props {
   onSelectSort: (sort: string) => void;
-  selectedSort: string;
 }
 
-const SortSelector = ({ onSelectSort, selectedSort }: Props) => {
+const SortSelector = ({ onSelectSort }: Props) => {
   const options = [
     { value: "title.asc", label: "Title" },
     { value: "revenue.desc", label: "Revenue" },
@@ -19,7 +18,6 @@ const SortSelector = ({ onSelectSort, selectedSort }: Props) => {
       defaultValue={options.find(
         (option) => option.value === "popularity.desc"
       )}
-      value={options.find((option) => option.value === selectedSort)}
       onSelect={(_, option) => onSelectSort(option.value)}
       style={{ width: "200px" }}
       options={options}

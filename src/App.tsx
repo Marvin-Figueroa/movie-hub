@@ -11,6 +11,7 @@ const { defaultAlgorithm, darkAlgorithm } = theme;
 
 export interface MovieQuery {
   with_genres: number;
+  with_watch_providers: number;
 }
 
 function App() {
@@ -23,6 +24,13 @@ function App() {
       ...prevMovieQuery,
       with_genres: genre,
     }));
+
+  const handleSelectWatchProvider = (watchProvider: number) => {
+    setMovieQuery((prevMovieQuery) => ({
+      ...prevMovieQuery,
+      with_watch_providers: watchProvider,
+    }));
+  };
 
   return (
     <ConfigProvider
@@ -52,7 +60,10 @@ function App() {
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
             <Space size="large" style={{ marginBottom: "15px" }}>
-              <WatchProviderSelector />
+              <WatchProviderSelector
+                onSelectWatchProvider={handleSelectWatchProvider}
+                selectedWatchProvider={movieQuery.with_watch_providers}
+              />
             </Space>
             <MovieGrid movieQuery={movieQuery} />
           </Content>

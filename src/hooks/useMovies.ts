@@ -20,7 +20,14 @@ export const useMovies = (movieQuery: MovieQuery) =>
     "/discover/movie",
     (response) => response.results,
     {
-      params: { ...movieQuery },
+      params: {
+        ...movieQuery,
+        with_watch_providers:
+          movieQuery.with_watch_providers === -1
+            ? null
+            : movieQuery.with_watch_providers,
+        watch_region: "US",
+      },
     },
-    [movieQuery.with_genres]
+    [movieQuery.with_genres, movieQuery.with_watch_providers]
   );

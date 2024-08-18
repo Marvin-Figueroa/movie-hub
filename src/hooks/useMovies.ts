@@ -21,13 +21,13 @@ export const useMovies = (movieQuery: MovieQuery) =>
     (response) => response.results,
     {
       params: {
-        ...movieQuery,
+        with_genres: movieQuery.with_genres,
+        watch_region: "US",
         with_watch_providers:
           movieQuery.with_watch_providers === -1
             ? null
             : movieQuery.with_watch_providers,
-        watch_region: "US",
       },
     },
-    [movieQuery.with_genres, movieQuery.with_watch_providers]
+    [movieQuery]
   );

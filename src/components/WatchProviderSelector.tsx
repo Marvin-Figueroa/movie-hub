@@ -3,9 +3,13 @@ import watchProviders from "../data/providers";
 
 interface Props {
   onSelectWatchProvider: (watchProvider: number) => void;
+  selectedWatchProvider?: number;
 }
 
-const WatchProviderSelector = ({ onSelectWatchProvider }: Props) => {
+const WatchProviderSelector = ({
+  onSelectWatchProvider,
+  selectedWatchProvider,
+}: Props) => {
   const options = [
     { value: -1, label: "All Watch Providers" },
     ...watchProviders.map((provider) => ({
@@ -15,7 +19,9 @@ const WatchProviderSelector = ({ onSelectWatchProvider }: Props) => {
   ];
   return (
     <Select
-      defaultValue={options.find((option) => option.value === -1)}
+      value={options.find(
+        (option) => option.value === (selectedWatchProvider || -1)
+      )}
       onSelect={(_, option) => onSelectWatchProvider(option.value)}
       style={{ width: "200px" }}
       options={options}

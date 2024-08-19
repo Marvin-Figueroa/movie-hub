@@ -1,38 +1,30 @@
-import { Col, Row, Typography } from "antd";
-import { useMovies } from "../hooks/useMovies";
+import { Col, Row } from "antd";
+import { Movie } from "../hooks/useMovies";
 import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
-import { MovieQuery } from "../App";
-
-const { Text } = Typography;
 
 interface Props {
-  movieQuery: MovieQuery;
+  movies: Movie[];
+  loading: boolean;
 }
 
 const skeletons = [1, 2, 3, 4, 5, 6];
 
-const MovieGrid = ({ movieQuery }: Props) => {
-  const { data: movies, error, loading } = useMovies(movieQuery);
-
+const MovieGrid = ({ movies, loading }: Props) => {
   return (
-    <>
-      {error && <Text type="danger">{error}</Text>}
-
-      <Row justify="start" gutter={[32, 32]}>
-        {loading &&
-          skeletons.map((skeleton) => (
-            <Col xs={24} md={12} xl={8} xxl={6} key={skeleton}>
-              <MovieCardSkeleton />
-            </Col>
-          ))}
-        {movies.map((movie) => (
-          <Col xs={24} md={12} xl={8} xxl={6} key={movie.id}>
-            <MovieCard movie={movie} />
+    <Row justify="start" gutter={[32, 32]}>
+      {loading &&
+        skeletons.map((skeleton) => (
+          <Col xs={24} md={12} xl={8} xxl={6} key={skeleton}>
+            <MovieCardSkeleton />
           </Col>
         ))}
-      </Row>
-    </>
+      {movies.map((movie) => (
+        <Col xs={24} md={12} xl={8} xxl={6} key={movie.id}>
+          <MovieCard movie={movie} />
+        </Col>
+      ))}
+    </Row>
   );
 };
 

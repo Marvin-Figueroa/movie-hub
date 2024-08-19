@@ -2,7 +2,7 @@ import { List, Image, Space, Button } from "antd";
 import { useGenres } from "../hooks/useGenres";
 
 interface Props {
-  selectedGenre: number;
+  selectedGenre?: number;
   onSelectGenre: (genre: number) => void;
 }
 

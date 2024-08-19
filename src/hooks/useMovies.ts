@@ -17,7 +17,7 @@ export interface FetchMoviesResponse {
 
 export const useMovies = (movieQuery: MovieQuery) =>
   useData<FetchMoviesResponse, Movie>(
-    "/discover/movie",
+    movieQuery.query ? "/search/movie" : "/discover/movie",
     (response) => response.results,
     {
       params: {
@@ -29,6 +29,7 @@ export const useMovies = (movieQuery: MovieQuery) =>
             ? null
             : movieQuery.with_watch_providers,
         primary_release_year: movieQuery.primary_release_year,
+        query: movieQuery.query || null,
       },
     },
     [movieQuery]

@@ -9,6 +9,7 @@ import WatchProviderSelector from "./components/WatchProviderSelector";
 import SortSelector from "./components/SortSelector";
 import { useMovies } from "./hooks/useMovies";
 import dayjs from "dayjs";
+import MovieHeading from "./components/MovieHeading";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -65,7 +66,8 @@ function App() {
             />
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
-            <Space size="large" style={{ marginBottom: "20px" }}>
+            <MovieHeading movieQuery={movieQuery} />
+            <Space size="large" style={{ margin: "20px 0" }}>
               <WatchProviderSelector
                 onSelectWatchProvider={(watchProvider: number) =>
                   setMovieQuery({

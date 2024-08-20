@@ -1,7 +1,10 @@
 import {
+  Button,
   ConfigProvider,
   DatePicker,
+  Flex,
   Grid,
+  Input,
   Layout,
   Space,
   theme,
@@ -19,6 +22,9 @@ import { useMovies } from "./hooks/useMovies";
 import dayjs from "dayjs";
 import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+
+const { Search } = Input;
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -34,6 +40,7 @@ function App() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
   const [darkMode, setDarkMode] = useState(false);
+  const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
   const { data: movies, loading } = useMovies(movieQuery);
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
@@ -45,17 +52,53 @@ function App() {
       }}
     >
       <Layout>
-        <Header style={customStyle}>
-          <NavBar
-            darkMode={darkMode}
-            toggleDarkMode={() => setDarkMode(!darkMode)}
-            loading={loading}
-            onSearch={(searchText: string) =>
-              setMovieQuery({
-                query: searchText,
-              })
-            }
-          />
+        <Header
+          style={{
+            ...customStyle,
+            padding: `${screens.lg ? "0 50px" : "0 20px"}`,
+          }}
+        >
+          {mobileSearchIsActive && !screens.md && (
+            <Flex
+              justify="center"
+              gap="15px"
+              align="center"
+              style={{ height: "64px" }}
+            >
+              <Button
+                size="large"
+                onClick={() => setMobileSearchIsActive(false)}
+                icon={<ArrowLeftOutlined />}
+              />
+              <Search
+                placeholder="Search movies by title..."
+                onSearch={(searchText: string) =>
+                  setMovieQuery({
+                    query: searchText,
+                  })
+                }
+                size="large"
+                allowClear
+                loading={loading}
+                style={{
+                  maxWidth: 400,
+                }}
+              />
+            </Flex>
+          )}
+          {(!mobileSearchIsActive || screens.md) && (
+            <NavBar
+              darkMode={darkMode}
+              toggleDarkMode={() => setDarkMode(!darkMode)}
+              loading={loading}
+              onSearch={(searchText: string) =>
+                setMovieQuery({
+                  query: searchText,
+                })
+              }
+              onActiveSearch={() => setMobileSearchIsActive(true)}
+            />
+          )}
         </Header>
         <Layout>
           <Sider

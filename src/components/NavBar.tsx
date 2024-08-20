@@ -1,6 +1,7 @@
-import { Flex, Image, Input } from "antd";
+import { Button, Flex, Grid, Image, Input, Space } from "antd";
 import logo from "../assets/movie-database-logo.svg";
 import ColorModeSwitch from "./ColorModeSwitch";
+import { SearchOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 
@@ -9,21 +10,39 @@ interface Props {
   toggleDarkMode: () => void;
   loading: boolean;
   onSearch: (searchText: string) => void;
+  onActiveSearch: () => void;
 }
 
-const NavBar = ({ darkMode, toggleDarkMode, loading, onSearch }: Props) => {
+const NavBar = ({
+  darkMode,
+  toggleDarkMode,
+  loading,
+  onSearch,
+  onActiveSearch,
+}: Props) => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   return (
     <Flex justify="space-between" align="center">
-      <Image preview={false} width={150} src={logo} />
+      <Image preview={false} width={screens.md ? 150 : 100} src={logo} />
       <Search
         placeholder="Search movies by title..."
         onSearch={(value) => onSearch(value)}
         size="large"
         allowClear
         loading={loading}
-        style={{ maxWidth: 500 }}
+        style={{ maxWidth: 400, display: `${screens.md ? "block" : "none"}` }}
       />
-      <ColorModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Space style={{ gap: "20px", cursor: "pointer" }}>
+        <Button
+          onClick={onActiveSearch}
+          shape="circle"
+          icon={<SearchOutlined />}
+          style={{ display: `${screens.md ? "none" : "block"}` }}
+        />
+        <ColorModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      </Space>
     </Flex>
   );
 };

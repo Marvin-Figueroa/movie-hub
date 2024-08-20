@@ -23,8 +23,8 @@ const WatchProviderSelector = ({
         (option) => option.value === (selectedWatchProvider || -1)
       )}
       onSelect={(_, option) => onSelectWatchProvider(option.value)}
-      style={{ width: "200px" }}
       options={options}
+      style={{ width: "100%", minWidth: "130px" }}
     />
   );
 };

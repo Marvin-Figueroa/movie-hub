@@ -1,4 +1,4 @@
-import { ConfigProvider, DatePicker, Layout, Space, theme } from "antd";
+import { ConfigProvider, DatePicker, Grid, Layout, Space, theme } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
@@ -22,6 +22,8 @@ export interface MovieQuery {
 }
 
 function App() {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
   const [darkMode, setDarkMode] = useState(false);
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
   const { data: movies, loading } = useMovies(movieQuery);
@@ -50,7 +52,7 @@ function App() {
           <Sider
             style={{ ...customStyle, padding: "1rem" }}
             trigger={null}
-            breakpoint="sm"
+            breakpoint="md"
             collapsedWidth={0}
             width="25%"
           >
@@ -66,7 +68,15 @@ function App() {
           </Sider>
           <Content style={{ ...customStyle, padding: "24px" }}>
             <MovieHeading movieQuery={movieQuery} />
-            <Space size="large" style={{ margin: "20px 0" }}>
+            <Space
+              size="large"
+              direction={screens.sm ? "horizontal" : "vertical"}
+              style={{
+                margin: "20px 0",
+                width: "100%",
+                justifyContent: `${screens.lg ? "left" : "center"}`,
+              }}
+            >
               <WatchProviderSelector
                 onSelectWatchProvider={(watchProvider: number) =>
                   setMovieQuery({
@@ -98,6 +108,10 @@ function App() {
                   })
                 }
                 picker="year"
+                style={{
+                  width: "100%",
+                }}
+                placeholder="Filter by year..."
               />
             </Space>
             <MovieGrid loading={loading} movies={movies} />

@@ -20,7 +20,7 @@ const SortSelector = ({ onSelectSort, selectedSort }: Props) => {
         (option) => option.value === (selectedSort || "popularity.desc")
       )}
       onSelect={(_, option) => onSelectSort(option.value)}
-      style={{ width: "200px" }}
+      style={{ width: "100%", minWidth: "130px" }}
       options={options}
     />
   );

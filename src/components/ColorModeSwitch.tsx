@@ -1,28 +1,25 @@
-import { MoonFilled, SunFilled } from '@ant-design/icons'
-import { Flex, Switch } from 'antd'
+import { MoonFilled, SunFilled } from "@ant-design/icons";
+import { Flex, Switch } from "antd";
 
 interface Props {
-  darkMode: boolean
-  toggleDarkMode: () => void
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
-const iconStyle = { fontSize: '20px', color: '#90cea1' }
+const iconStyle = { fontSize: "15px", color: "#fff" };
 
 const ColorModeSwitch = ({ darkMode, toggleDarkMode }: Props) => {
   return (
-    <Flex gap='middle'>
+    <Flex gap="middle">
       <Switch
-        style={{ backgroundColor: darkMode ? '#90cea1' : '#ddd' }}
+        style={{ backgroundColor: "#15B7DB" }}
         checked={darkMode}
         onChange={toggleDarkMode}
+        checkedChildren={<MoonFilled style={iconStyle} />}
+        unCheckedChildren={<SunFilled style={iconStyle} />}
       />
-      {darkMode ? (
-        <MoonFilled style={iconStyle} />
-      ) : (
-        <SunFilled style={iconStyle} />
-      )}
     </Flex>
-  )
-}
+  );
+};
 
-export default ColorModeSwitch
+export default ColorModeSwitch;

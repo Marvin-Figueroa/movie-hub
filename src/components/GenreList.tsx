@@ -12,7 +12,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   return (
     <List
       size="small"
-      dataSource={genres}
+      dataSource={[{ id: -1, name: "All" }, ...genres]}
       renderItem={(genre) => (
         <List.Item>
           <Button

@@ -15,10 +15,12 @@ const MovieHeading = ({ movieQuery }: Props) => {
   );
 
   return (
-    <Typography.Title level={1} style={{ margin: 0, color: "#15B7DB" }}>
-      {`${selectedProvider?.provider_name || ""} ${
-        selectedGenre?.name || ""
-      } Movies`}
+    <Typography.Title level={2} style={{ margin: 0, color: "#15B7DB" }}>
+      {`${
+        selectedProvider?.provider_name
+          ? selectedProvider.provider_name + " - "
+          : ""
+      } ${selectedGenre?.name ? selectedGenre.name + " - " : ""} Movies`}
     </Typography.Title>
   );
 };

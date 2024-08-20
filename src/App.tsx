@@ -83,7 +83,13 @@ function App() {
               selectedGenre={movieQuery.with_genres}
             />
           </Sider>
-          <Content style={{ ...customStyle, padding: "24px" }}>
+          <Content
+            style={{
+              ...customStyle,
+              padding: "24px",
+              textAlign: `${screens.lg ? "left" : "center"}`,
+            }}
+          >
             <MovieHeading movieQuery={movieQuery} />
             <Space
               size="large"

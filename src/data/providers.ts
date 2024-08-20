@@ -31,7 +31,7 @@ export default [
   },
   {
     logo_path: "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
-    provider_name: "Google Play Movies",
+    provider_name: "Google Play",
     provider_id: 3,
   },
 

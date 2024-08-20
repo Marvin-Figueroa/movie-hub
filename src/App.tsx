@@ -58,7 +58,6 @@ function App() {
               onSelectGenre={(genre: number) =>
                 setMovieQuery({
                   ...movieQuery,
-                  query: "",
                   with_genres: genre,
                 })
               }

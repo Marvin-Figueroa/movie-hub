@@ -23,6 +23,10 @@ export const MovieCard = ({ movie }: Props) => {
                 }`
               : "/placeholder.jpg"
           }
+          style={{
+            height: "400px",
+            objectFit: "cover",
+          }}
         />
       }
     >
@@ -30,7 +34,7 @@ export const MovieCard = ({ movie }: Props) => {
         title={movie.title}
         description={
           <>
-            <p>{movie.release_date}</p>
+            <p>{movie.release_date || "N/A"}</p>
             <VoteScore score={movie.vote_average} />
           </>
         }

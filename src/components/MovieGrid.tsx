@@ -15,12 +15,12 @@ const MovieGrid = ({ movies, loading }: Props) => {
     <Row justify="start" gutter={[32, 32]}>
       {loading &&
         skeletons.map((skeleton) => (
-          <Col xs={24} md={12} xl={8} xxl={6} key={skeleton}>
+          <Col xs={24} sm={12} md={8} xl={6} xxl={4} key={skeleton}>
             <MovieCardSkeleton />
           </Col>
         ))}
       {movies.map((movie) => (
-        <Col xs={24} md={12} xl={8} xxl={6} key={movie.id}>
+        <Col xs={24} sm={12} md={8} xl={6} xxl={4} key={movie.id}>
           <MovieCard movie={movie} />
         </Col>
       ))}

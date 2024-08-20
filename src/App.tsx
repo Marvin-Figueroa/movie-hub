@@ -62,7 +62,7 @@ function App() {
             style={{
               ...customStyle,
               padding: "1rem",
-              display: `${screens.md ? "block" : "none"}`,
+              display: `${screens.lg ? "block" : "none"}`,
             }}
             trigger={null}
             width="200px"
@@ -109,7 +109,7 @@ function App() {
                 }
                 selectedWatchProvider={movieQuery.with_watch_providers}
               />
-              {screens.md ? null : (
+              {screens.lg ? null : (
                 <GenreSelector
                   onSelectGenre={(genre: number) =>
                     setMovieQuery({

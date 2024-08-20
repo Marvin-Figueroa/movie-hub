@@ -1,4 +1,12 @@
-import { ConfigProvider, DatePicker, Grid, Layout, Space, theme } from "antd";
+import {
+  ConfigProvider,
+  DatePicker,
+  Grid,
+  Layout,
+  Space,
+  theme,
+  Typography,
+} from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
@@ -10,6 +18,7 @@ import SortSelector from "./components/SortSelector";
 import { useMovies } from "./hooks/useMovies";
 import dayjs from "dayjs";
 import MovieHeading from "./components/MovieHeading";
+import GenreSelector from "./components/GenreSelector";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -50,12 +59,20 @@ function App() {
         </Header>
         <Layout>
           <Sider
-            style={{ ...customStyle, padding: "1rem" }}
+            style={{
+              ...customStyle,
+              padding: "1rem",
+              display: `${screens.md ? "block" : "none"}`,
+            }}
             trigger={null}
-            breakpoint="md"
-            collapsedWidth={0}
-            width="25%"
+            width="200px"
           >
+            <Typography.Title
+              level={3}
+              style={{ margin: "0 0 15px 20px", color: "#15B7DB" }}
+            >
+              Genres
+            </Typography.Title>
             <GenreList
               onSelectGenre={(genre: number) =>
                 setMovieQuery({
@@ -86,6 +103,17 @@ function App() {
                 }
                 selectedWatchProvider={movieQuery.with_watch_providers}
               />
+              {screens.md ? null : (
+                <GenreSelector
+                  onSelectGenre={(genre: number) =>
+                    setMovieQuery({
+                      ...movieQuery,
+                      with_genres: genre,
+                    })
+                  }
+                  selectedGenre={movieQuery.with_genres}
+                />
+              )}
               <SortSelector
                 onSelectSort={(sort: string) =>
                   setMovieQuery({

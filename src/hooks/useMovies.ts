@@ -21,7 +21,8 @@ export const useMovies = (movieQuery: MovieQuery) =>
     (response) => response.results,
     {
       params: {
-        with_genres: movieQuery.with_genres,
+        with_genres:
+          movieQuery.with_genres === -1 ? null : movieQuery.with_genres,
         watch_region: "US",
         sort_by: movieQuery.sort_by,
         with_watch_providers:

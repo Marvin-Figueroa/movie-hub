@@ -2,6 +2,7 @@ import { Button, Flex, Grid, Image, Input, Space } from "antd";
 import logo from "../assets/movie-database-logo.svg";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { SearchOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
 const { Search } = Input;
 
@@ -12,6 +13,17 @@ interface Props {
   onSearch: (searchText: string) => void;
   onActiveSearch: () => void;
 }
+
+const CustomButton = styled(Button)<{ isMdScreen?: boolean }>`
+  && {
+    display: ${({ isMdScreen }) => (isMdScreen ? "none" : "block")};
+  }
+`;
+
+const CustomSearch = styled(Search)<{ isMdScreen?: boolean }>`
+  max-width: 400px;
+  display: ${({ isMdScreen }) => (isMdScreen ? "block" : "none")};
+`;
 
 const NavBar = ({
   darkMode,
@@ -26,20 +38,20 @@ const NavBar = ({
   return (
     <Flex justify="space-between" align="center">
       <Image preview={false} width={screens.md ? 150 : 100} src={logo} />
-      <Search
+      <CustomSearch
         placeholder="Search movies by title..."
         onSearch={(value) => onSearch(value)}
         size="large"
         allowClear
         loading={loading}
-        style={{ maxWidth: 400, display: `${screens.md ? "block" : "none"}` }}
+        isMdScreen={screens.md}
       />
-      <Space style={{ gap: "20px", cursor: "pointer" }}>
-        <Button
+      <Space size={screens.sm ? "large" : "middle"}>
+        <CustomButton
           onClick={onActiveSearch}
           shape="circle"
           icon={<SearchOutlined />}
-          style={{ display: `${screens.md ? "none" : "block"}` }}
+          isMdScreen={screens.md}
         />
         <ColorModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       </Space>

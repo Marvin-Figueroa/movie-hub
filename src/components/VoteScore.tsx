@@ -1,18 +1,16 @@
 import { Rate } from "antd";
+import styled from "styled-components";
 
 interface Props {
   score: number;
 }
 
+const CustomRate = styled(Rate)`
+  color: #15b7db;
+`;
+
 const VoteScore = ({ score }: Props) => {
-  return (
-    <Rate
-      style={{ color: "#15B7DB" }}
-      allowHalf
-      disabled
-      defaultValue={Math.round(score) / 2}
-    />
-  );
+  return <CustomRate allowHalf disabled defaultValue={Math.round(score) / 2} />;
 };
 
 export default VoteScore;

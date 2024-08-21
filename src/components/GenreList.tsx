@@ -1,10 +1,20 @@
 import { List, Button } from "antd";
 import { useGenres } from "../hooks/useGenres";
+import styled from "styled-components";
 
 interface Props {
   selectedGenre?: number;
   onSelectGenre: (genre: number) => void;
 }
+
+const CustomButton = styled(Button)<{ selected: boolean }>`
+  &&&& {
+    background-color: ${({ selected }) =>
+      selected ? "#15B7DB" : "transparent"};
+    color: ${({ selected }) => (selected ? "#fff" : "#15B7DB")};
+    font-weight: ${({ selected }) => (selected ? "bold" : "normal")};
+  }
+`;
 
 const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data: genres } = useGenres();
@@ -15,20 +25,14 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
       dataSource={[{ id: -1, name: "All" }, ...genres]}
       renderItem={(genre) => (
         <List.Item>
-          <Button
+          <CustomButton
+            selected={selectedGenre === genre.id}
             size="small"
             onClick={() => onSelectGenre(genre.id)}
-            type="link"
-            style={{
-              backgroundColor: `${
-                selectedGenre === genre.id ? "#15B7DB" : "transparent"
-              }`,
-              color: `${selectedGenre === genre.id ? "#fff" : "#15B7DB"}`,
-              fontWeight: `${selectedGenre === genre.id ? "bolder" : "normal"}`,
-            }}
+            type="text"
           >
             {genre.name}
-          </Button>
+          </CustomButton>
         </List.Item>
       )}
     />

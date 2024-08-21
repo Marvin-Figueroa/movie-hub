@@ -1,39 +1,55 @@
+import styled from "styled-components";
 import { Footer } from "antd/es/layout/layout";
 import { Image, Space, Typography } from "antd";
 
 const { Text, Link } = Typography;
+
 import justwatchLogo from "../assets/justwatch-logo.png";
 import tmdbLogo from "../assets/movie-database-logo.svg";
+import reactLogo from "../assets/react.svg";
+
+const CustomSpace = styled(Space)`
+  justify-content: center;
+  margin: 0;
+  width: 100%;
+`;
+
+const CustomFooter = styled(Footer)`
+  text-align: center;
+  padding-top: 35px;
+`;
+
+const CustomText = styled(Text)`
+  font-size: 16px;
+  text-wrap: nowrap;
+`;
+
+const CustomLink = styled(Link)`
+  &&& {
+    font-size: 16px;
+    color: #15b7db;
+  }
+`;
 
 const PageFooter = () => {
   return (
-    <Footer style={{ textAlign: "center", paddingTop: "35px" }}>
-      <Space direction="vertical">
-        <Text strong style={{ fontSize: "16px", textWrap: "nowrap" }}>
+    <CustomFooter>
+      <Space direction="vertical" size="middle">
+        <CustomText strong>
           Developed by
-          <Link
-            href="https://github.com/Marvin-Figueroa"
-            target="_blank"
-            style={{ fontSize: "16px", color: "#15B7DB" }}
-          >
+          <CustomLink href="https://github.com/Marvin-Figueroa" target="_blank">
             &nbsp;Marvin Figueroa&nbsp;
-          </Link>
+          </CustomLink>
           ©{new Date().getFullYear()}
-        </Text>
-        <Text style={{ fontSize: "16px" }}>Powered By</Text>
+        </CustomText>
+        <Text>Powered By</Text>
       </Space>
-      <Space
-        size="large"
-        style={{
-          justifyContent: "center",
-          margin: 0,
-          width: "100%",
-        }}
-      >
+      <CustomSpace size="large">
         <Image preview={false} width={100} src={tmdbLogo} />
+        <Image preview={false} width={30} src={reactLogo} />
         <Image preview={false} width={100} src={justwatchLogo} />
-      </Space>
-    </Footer>
+      </CustomSpace>
+    </CustomFooter>
   );
 };
 

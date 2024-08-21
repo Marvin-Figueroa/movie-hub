@@ -1,17 +1,28 @@
-import { Card, Skeleton } from "antd";
+import { Card, Skeleton, Space } from "antd";
 import Meta from "antd/es/card/Meta";
+import styled from "styled-components";
+
+const CustomSkeletonImage = styled(Skeleton.Image)`
+  &&& {
+    height: 300px;
+    width: 250px;
+  }
+`;
+
+const CustomSkeletonButton = styled(Skeleton.Button)<{ width: number }>`
+  &&& {
+    width: ${({ width }) => width}px;
+    margin-top: 2px;
+  }
+`;
+
+const CustomCard = styled(Card)`
+  overflow: hidden;
+`;
 
 export const MovieCardSkeleton = () => {
   return (
-    <Card
-      hoverable
-      cover={
-        <Skeleton.Image
-          active={true}
-          style={{ height: "400px", width: "300px" }}
-        />
-      }
-    >
+    <CustomCard hoverable cover={<CustomSkeletonImage active={true} />}>
       <Meta
         title={
           <Skeleton.Button
@@ -22,22 +33,22 @@ export const MovieCardSkeleton = () => {
           />
         }
         description={
-          <>
-            <Skeleton.Button
+          <Space direction="vertical">
+            <CustomSkeletonButton
               active={true}
               size={"small"}
               shape={"square"}
-              style={{ marginBottom: "8px", width: "120px" }}
+              width={100}
             />
-            <Skeleton.Button
+            <CustomSkeletonButton
               active={true}
               size={"small"}
               shape={"square"}
-              style={{ width: "180px" }}
+              width={140}
             />
-          </>
+          </Space>
         }
       />
-    </Card>
+    </CustomCard>
   );
 };

@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Image } from "antd";
 
 const { Meta } = Card;
 
@@ -14,7 +14,9 @@ export const MovieCard = ({ movie }: Props) => {
     <Card
       hoverable
       cover={
-        <img
+        <Image
+          preview={false}
+          height={300}
           alt={movie.title}
           src={
             movie.poster_path
@@ -23,10 +25,6 @@ export const MovieCard = ({ movie }: Props) => {
                 }`
               : "/placeholder.jpg"
           }
-          style={{
-            height: "400px",
-            objectFit: "cover",
-          }}
         />
       }
     >

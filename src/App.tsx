@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import PageFooter from "./components/PageFooter";
 
 const { Search } = Input;
 
@@ -194,6 +195,7 @@ function App() {
             <MovieGrid loading={loading} movies={movies} />
           </Content>
         </Layout>
+        <PageFooter />
       </Layout>
     </ConfigProvider>
   );

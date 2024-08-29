@@ -8,7 +8,7 @@ interface Props {
   loading: boolean;
 }
 
-const skeletons = [1, 2, 3, 4, 5, 6];
+const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const MovieGrid = ({ movies, loading }: Props) => {
   return (

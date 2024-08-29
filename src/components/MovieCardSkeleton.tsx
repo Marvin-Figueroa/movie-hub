@@ -1,11 +1,12 @@
 import { Card, Skeleton, Space } from "antd";
-import Meta from "antd/es/card/Meta";
 import styled from "styled-components";
+
+const { Meta } = Card;
 
 const CustomSkeletonImage = styled(Skeleton.Image)`
   &&& {
     height: 300px;
-    width: 250px;
+    width: 100%;
   }
 `;
 

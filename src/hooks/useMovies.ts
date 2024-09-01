@@ -38,6 +38,7 @@ export const useMovies = (movieQuery: MovieQuery) => {
               : movieQuery.with_watch_providers,
           primary_release_year: movieQuery.primary_release_year,
           query: movieQuery.query || null,
+          page: movieQuery.page,
         },
       }),
   });

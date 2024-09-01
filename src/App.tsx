@@ -6,6 +6,7 @@ import {
   Grid,
   Input,
   Layout,
+  Pagination,
   Space,
   theme,
   Typography,
@@ -24,10 +25,17 @@ import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import PageFooter from "./components/PageFooter";
+import styled from "styled-components";
 
 const { Search } = Input;
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
+
+const CustomSpace = styled(Space)`
+  justify-content: center;
+  margin: 3rem auto;
+  width: 100%;
+`;
 
 export interface MovieQuery {
   with_genres?: number;
@@ -35,6 +43,7 @@ export interface MovieQuery {
   sort_by?: string;
   primary_release_year?: number;
   query?: string;
+  page?: number;
 }
 
 function App() {
@@ -43,7 +52,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const { data: movies, isLoading } = useMovies(movieQuery);
+  const { data, isLoading } = useMovies(movieQuery);
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
 
   return (
@@ -79,6 +88,7 @@ function App() {
                 onSearch={(searchText: string) =>
                   setMovieQuery({
                     query: searchText,
+                    page: 1,
                   })
                 }
                 size="large"
@@ -98,6 +108,7 @@ function App() {
               onSearch={(searchText: string) =>
                 setMovieQuery({
                   query: searchText,
+                  page: 1,
                 })
               }
               onActiveSearch={() => setMobileSearchIsActive(true)}
@@ -125,6 +136,7 @@ function App() {
                 setMovieQuery({
                   ...movieQuery,
                   with_genres: genre,
+                  page: 1,
                 })
               }
               selectedGenre={movieQuery.with_genres}
@@ -133,7 +145,7 @@ function App() {
           <Content
             style={{
               ...customStyle,
-              padding: "24px",
+              padding: "24px 24px 0 24px",
               textAlign: `${screens.lg ? "left" : "center"}`,
             }}
           >
@@ -152,6 +164,7 @@ function App() {
                   setMovieQuery({
                     ...movieQuery,
                     with_watch_providers: watchProvider,
+                    page: 1,
                   })
                 }
                 selectedWatchProvider={movieQuery.with_watch_providers}
@@ -162,6 +175,7 @@ function App() {
                     setMovieQuery({
                       ...movieQuery,
                       with_genres: genre,
+                      page: 1,
                     })
                   }
                   selectedGenre={movieQuery.with_genres}
@@ -186,6 +200,7 @@ function App() {
                   setMovieQuery({
                     ...movieQuery,
                     primary_release_year: date?.year(),
+                    page: 1,
                   })
                 }
                 picker="year"
@@ -195,9 +210,30 @@ function App() {
                 placeholder="Filter by year..."
               />
             </Space>
-            <MovieGrid loading={isLoading} movies={movies?.results} />
+            <MovieGrid loading={isLoading} movies={data?.results} />
           </Content>
         </Layout>
+        <Layout style={{ ...customStyle }}>
+          <CustomSpace>
+            <Pagination
+              disabled={isLoading}
+              showSizeChanger={false}
+              current={movieQuery.page || 1}
+              // Max 'page' value allowed in API is 500
+              // Default page size is 20 (cannot be changed, API does not support custom values )
+              // 10,000 items, 20 per page gives you the max 0f 500 pages
+              total={Math.min(
+                isLoading ? 10_000 : data ? data.total_results : 0,
+                10_000
+              )}
+              defaultPageSize={20}
+              onChange={(newPage) =>
+                setMovieQuery({ ...movieQuery, page: newPage })
+              }
+            />
+          </CustomSpace>
+        </Layout>
+
         <PageFooter />
       </Layout>
     </ConfigProvider>

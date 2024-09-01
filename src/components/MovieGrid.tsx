@@ -4,7 +4,7 @@ import { MovieCard } from "./MovieCard";
 import { MovieCardSkeleton } from "./MovieCardSkeleton";
 
 interface Props {
-  movies: Movie[];
+  movies: Movie[] | undefined;
   loading: boolean;
 }
 
@@ -19,7 +19,7 @@ const MovieGrid = ({ movies, loading }: Props) => {
             <MovieCardSkeleton />
           </Col>
         ))}
-      {movies.map((movie) => (
+      {movies?.map((movie) => (
         <Col xs={24} sm={12} md={8} xl={6} xxl={4} key={movie.id}>
           <MovieCard movie={movie} />
         </Col>

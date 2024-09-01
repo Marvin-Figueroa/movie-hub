@@ -43,7 +43,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const { data: movies, loading } = useMovies(movieQuery);
+  const { data: movies, isLoading } = useMovies(movieQuery);
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
 
   return (
@@ -83,7 +83,7 @@ function App() {
                 }
                 size="large"
                 allowClear
-                loading={loading}
+                loading={isLoading}
                 style={{
                   maxWidth: 400,
                 }}
@@ -94,7 +94,7 @@ function App() {
             <NavBar
               darkMode={darkMode}
               toggleDarkMode={() => setDarkMode(!darkMode)}
-              loading={loading}
+              loading={isLoading}
               onSearch={(searchText: string) =>
                 setMovieQuery({
                   query: searchText,
@@ -195,7 +195,7 @@ function App() {
                 placeholder="Filter by year..."
               />
             </Space>
-            <MovieGrid loading={loading} movies={movies} />
+            <MovieGrid loading={isLoading} movies={movies?.results} />
           </Content>
         </Layout>
         <PageFooter />

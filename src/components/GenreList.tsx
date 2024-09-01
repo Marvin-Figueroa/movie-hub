@@ -17,12 +17,12 @@ const CustomButton = styled(Button)<{ selected: boolean }>`
 `;
 
 const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
-  const { data: genres } = useGenres();
+  const { data } = useGenres();
 
   return (
     <List
       size="small"
-      dataSource={[{ id: -1, name: "All" }, ...genres]}
+      dataSource={data ? [{ id: -1, name: "All" }, ...data.genres] : []}
       renderItem={(genre) => (
         <List.Item>
           <CustomButton

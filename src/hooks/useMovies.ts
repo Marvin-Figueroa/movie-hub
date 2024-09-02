@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 import { MovieQuery } from "../App";
 import APIClient from "../services/apiClient";
 
@@ -17,6 +19,8 @@ interface FetchMoviesResponse {
   total_pages: number;
   total_results: number;
 }
+
+dayjs.extend(duration);
 
 export const useMovies = (movieQuery: MovieQuery) => {
   const apiClient = new APIClient<FetchMoviesResponse>(
@@ -41,5 +45,6 @@ export const useMovies = (movieQuery: MovieQuery) => {
           page: movieQuery.page,
         },
       }),
+    staleTime: dayjs.duration(1, "day").asMilliseconds(),
   });
 };

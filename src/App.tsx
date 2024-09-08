@@ -6,7 +6,6 @@ import {
   Grid,
   Input,
   Layout,
-  Pagination,
   Space,
   theme,
   Typography,
@@ -25,18 +24,12 @@ import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import PageFooter from "./components/PageFooter";
-import styled from "styled-components";
 import useMovieQueryStore from "./store";
+import Pagination from "./components/Pagination";
 
 const { Search } = Input;
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
-
-const CustomSpace = styled(Space)`
-  justify-content: center;
-  margin: 3rem auto;
-  width: 100%;
-`;
 
 function App() {
   const { useBreakpoint } = Grid;
@@ -47,9 +40,7 @@ function App() {
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
   const setSearchText = useMovieQueryStore((s) => s.setSearchText);
   const setYear = useMovieQueryStore((s) => s.setYear);
-  const setPage = useMovieQueryStore((s) => s.setPage);
   const year = useMovieQueryStore((s) => s.movieQuery.year);
-  const page = useMovieQueryStore((s) => s.movieQuery.page);
 
   return (
     <ConfigProvider
@@ -152,22 +143,7 @@ function App() {
           </Content>
         </Layout>
         <Layout style={{ ...customStyle }}>
-          <CustomSpace>
-            <Pagination
-              disabled={isLoading}
-              showSizeChanger={false}
-              current={page || 1}
-              // Max 'page' value allowed in API is 500
-              // Default page size is 20 (cannot be changed, API does not support custom values )
-              // 10,000 items, 20 per page gives you the max 0f 500 pages
-              total={Math.min(
-                isLoading ? 10_000 : data ? data.total_results : 0,
-                10_000
-              )}
-              defaultPageSize={20}
-              onChange={setPage}
-            />
-          </CustomSpace>
+          <Pagination isLoading={isLoading} totalItems={data?.total_results} />
         </Layout>
 
         <PageFooter />

@@ -1,14 +1,4 @@
-import {
-  Button,
-  ConfigProvider,
-  Flex,
-  Grid,
-  Input,
-  Layout,
-  Space,
-  theme,
-  Typography,
-} from "antd";
+import { ConfigProvider, Grid, Layout, Space, theme, Typography } from "antd";
 import { Header, Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import NavBar from "./components/NavBar";
@@ -20,13 +10,10 @@ import SortSelector from "./components/SortSelector";
 import { useMovies } from "./hooks/useMovies";
 import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
-import { ArrowLeftOutlined } from "@ant-design/icons";
 import PageFooter from "./components/PageFooter";
-import useMovieQueryStore from "./store";
 import Pagination from "./components/Pagination";
 import YearSelector from "./components/YearSelector";
-
-const { Search } = Input;
+import MobileSearch from "./components/MobileSearch";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
@@ -37,7 +24,6 @@ function App() {
   const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
   const { data, isLoading } = useMovies();
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
-  const setSearchText = useMovieQueryStore((s) => s.setSearchText);
 
   return (
     <ConfigProvider
@@ -56,28 +42,12 @@ function App() {
           }}
         >
           {mobileSearchIsActive && !screens.md && (
-            <Flex
-              justify="center"
-              gap="15px"
-              align="center"
-              style={{ height: "64px" }}
-            >
-              <Button
-                size="large"
-                onClick={() => setMobileSearchIsActive(false)}
-                icon={<ArrowLeftOutlined />}
-              />
-              <Search
-                placeholder="Search movies by title..."
-                onSearch={setSearchText}
-                size="large"
-                allowClear
-                loading={isLoading}
-                style={{
-                  maxWidth: 400,
-                }}
-              />
-            </Flex>
+            <MobileSearch
+              isLoading={isLoading}
+              setMobileSearchActive={(isActive) =>
+                setMobileSearchIsActive(isActive)
+              }
+            />
           )}
           {(!mobileSearchIsActive || screens.md) && (
             <NavBar
@@ -134,7 +104,6 @@ function App() {
         <Layout style={{ ...customStyle }}>
           <Pagination isLoading={isLoading} totalItems={data?.total_results} />
         </Layout>
-
         <PageFooter />
       </Layout>
     </ConfigProvider>

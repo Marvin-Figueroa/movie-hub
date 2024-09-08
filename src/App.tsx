@@ -1,7 +1,6 @@
 import {
   Button,
   ConfigProvider,
-  DatePicker,
   Flex,
   Grid,
   Input,
@@ -19,13 +18,13 @@ import GenreList from "./components/GenreList";
 import WatchProviderSelector from "./components/WatchProviderSelector";
 import SortSelector from "./components/SortSelector";
 import { useMovies } from "./hooks/useMovies";
-import dayjs from "dayjs";
 import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import PageFooter from "./components/PageFooter";
 import useMovieQueryStore from "./store";
 import Pagination from "./components/Pagination";
+import YearSelector from "./components/YearSelector";
 
 const { Search } = Input;
 
@@ -39,8 +38,6 @@ function App() {
   const { data, isLoading } = useMovies();
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
   const setSearchText = useMovieQueryStore((s) => s.setSearchText);
-  const setYear = useMovieQueryStore((s) => s.setYear);
-  const year = useMovieQueryStore((s) => s.movieQuery.year);
 
   return (
     <ConfigProvider
@@ -129,15 +126,7 @@ function App() {
               <WatchProviderSelector />
               {screens.lg ? null : <GenreSelector />}
               <SortSelector />
-              <DatePicker
-                value={year ? dayjs().year(year) : null}
-                onChange={(date) => setYear(date?.year())}
-                picker="year"
-                style={{
-                  width: "100%",
-                }}
-                placeholder="Filter by year..."
-              />
+              <YearSelector />
             </Space>
             <MovieGrid loading={isLoading} movies={data?.results} />
           </Content>

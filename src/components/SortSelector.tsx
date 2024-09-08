@@ -1,10 +1,6 @@
 import { Select } from "antd";
 import styled from "styled-components";
-
-interface Props {
-  onSelectSort: (sort: string) => void;
-  selectedSort?: string;
-}
+import useMovieQueryStore from "../store";
 
 const CustomSelect = styled(Select)`
   width: 100%;
@@ -19,13 +15,16 @@ const options = [
   { value: "primary_release_date.desc", label: "Release Date" },
 ];
 
-const SortSelector = ({ onSelectSort, selectedSort }: Props) => {
+const SortSelector = () => {
+  const selectedSort = useMovieQueryStore((s) => s.movieQuery.sort);
+  const setSortOrder = useMovieQueryStore((s) => s.setSortOrder);
+
   return (
     <CustomSelect
       value={options.find(
         (option) => option.value === (selectedSort || "popularity.desc")
       )}
-      onSelect={(_, option) => onSelectSort(option.value)}
+      onSelect={(_, option) => setSortOrder(option.value)}
       options={options}
     />
   );

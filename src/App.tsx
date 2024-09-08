@@ -26,6 +26,7 @@ import GenreSelector from "./components/GenreSelector";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import PageFooter from "./components/PageFooter";
 import styled from "styled-components";
+import useMovieQueryStore from "./store";
 
 const { Search } = Input;
 
@@ -37,23 +38,18 @@ const CustomSpace = styled(Space)`
   width: 100%;
 `;
 
-export interface MovieQuery {
-  with_genres?: number;
-  with_watch_providers?: number;
-  sort_by?: string;
-  primary_release_year?: number;
-  query?: string;
-  page?: number;
-}
-
 function App() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
   const [darkMode, setDarkMode] = useState(false);
   const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
-  const [movieQuery, setMovieQuery] = useState<MovieQuery>({} as MovieQuery);
-  const { data, isLoading } = useMovies(movieQuery);
+  const { data, isLoading } = useMovies();
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
+  const setSearchText = useMovieQueryStore((s) => s.setSearchText);
+  const setYear = useMovieQueryStore((s) => s.setYear);
+  const setPage = useMovieQueryStore((s) => s.setPage);
+  const year = useMovieQueryStore((s) => s.movieQuery.year);
+  const page = useMovieQueryStore((s) => s.movieQuery.page);
 
   return (
     <ConfigProvider
@@ -85,12 +81,7 @@ function App() {
               />
               <Search
                 placeholder="Search movies by title..."
-                onSearch={(searchText: string) =>
-                  setMovieQuery({
-                    query: searchText,
-                    page: 1,
-                  })
-                }
+                onSearch={setSearchText}
                 size="large"
                 allowClear
                 loading={isLoading}
@@ -105,12 +96,6 @@ function App() {
               darkMode={darkMode}
               toggleDarkMode={() => setDarkMode(!darkMode)}
               loading={isLoading}
-              onSearch={(searchText: string) =>
-                setMovieQuery({
-                  query: searchText,
-                  page: 1,
-                })
-              }
               onActiveSearch={() => setMobileSearchIsActive(true)}
             />
           )}
@@ -131,16 +116,7 @@ function App() {
             >
               Genres
             </Typography.Title>
-            <GenreList
-              onSelectGenre={(genre: number) =>
-                setMovieQuery({
-                  ...movieQuery,
-                  with_genres: genre,
-                  page: 1,
-                })
-              }
-              selectedGenre={movieQuery.with_genres}
-            />
+            <GenreList />
           </Sider>
           <Content
             style={{
@@ -149,7 +125,7 @@ function App() {
               textAlign: `${screens.lg ? "left" : "center"}`,
             }}
           >
-            <MovieHeading movieQuery={movieQuery} />
+            <MovieHeading />
             <Space
               size="large"
               direction={screens.sm ? "horizontal" : "vertical"}
@@ -159,50 +135,12 @@ function App() {
                 justifyContent: `${screens.lg ? "left" : "center"}`,
               }}
             >
-              <WatchProviderSelector
-                onSelectWatchProvider={(watchProvider: number) =>
-                  setMovieQuery({
-                    ...movieQuery,
-                    with_watch_providers: watchProvider,
-                    page: 1,
-                  })
-                }
-                selectedWatchProvider={movieQuery.with_watch_providers}
-              />
-              {screens.lg ? null : (
-                <GenreSelector
-                  onSelectGenre={(genre: number) =>
-                    setMovieQuery({
-                      ...movieQuery,
-                      with_genres: genre,
-                      page: 1,
-                    })
-                  }
-                  selectedGenre={movieQuery.with_genres}
-                />
-              )}
-              <SortSelector
-                onSelectSort={(sort: string) =>
-                  setMovieQuery({
-                    ...movieQuery,
-                    sort_by: sort,
-                  })
-                }
-                selectedSort={movieQuery.sort_by}
-              />
+              <WatchProviderSelector />
+              {screens.lg ? null : <GenreSelector />}
+              <SortSelector />
               <DatePicker
-                value={
-                  movieQuery.primary_release_year
-                    ? dayjs().year(movieQuery.primary_release_year)
-                    : null
-                }
-                onChange={(date) =>
-                  setMovieQuery({
-                    ...movieQuery,
-                    primary_release_year: date?.year(),
-                    page: 1,
-                  })
-                }
+                value={year ? dayjs().year(year) : null}
+                onChange={(date) => setYear(date?.year())}
                 picker="year"
                 style={{
                   width: "100%",
@@ -218,7 +156,7 @@ function App() {
             <Pagination
               disabled={isLoading}
               showSizeChanger={false}
-              current={movieQuery.page || 1}
+              current={page || 1}
               // Max 'page' value allowed in API is 500
               // Default page size is 20 (cannot be changed, API does not support custom values )
               // 10,000 items, 20 per page gives you the max 0f 500 pages
@@ -227,9 +165,7 @@ function App() {
                 10_000
               )}
               defaultPageSize={20}
-              onChange={(newPage) =>
-                setMovieQuery({ ...movieQuery, page: newPage })
-              }
+              onChange={setPage}
             />
           </CustomSpace>
         </Layout>

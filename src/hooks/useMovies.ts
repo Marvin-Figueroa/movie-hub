@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { MovieQuery } from "../App";
 import APIClient from "../services/apiClient";
+import useMovieQueryStore from "../store";
 
 export interface Movie {
   id: number;
@@ -22,9 +22,10 @@ interface FetchMoviesResponse {
 
 dayjs.extend(duration);
 
-export const useMovies = (movieQuery: MovieQuery) => {
+export const useMovies = () => {
+  const movieQuery = useMovieQueryStore((s) => s.movieQuery);
   const apiClient = new APIClient<FetchMoviesResponse>(
-    `${movieQuery.query ? "/search/movie" : "/discover/movie"}`
+    `${movieQuery.search ? "/search/movie" : "/discover/movie"}`
   );
 
   return useQuery<FetchMoviesResponse, Error>({
@@ -32,16 +33,13 @@ export const useMovies = (movieQuery: MovieQuery) => {
     queryFn: () =>
       apiClient.getAll({
         params: {
-          with_genres:
-            movieQuery.with_genres === -1 ? null : movieQuery.with_genres,
+          with_genres: movieQuery.genre === -1 ? null : movieQuery.genre,
           watch_region: "US",
-          sort_by: movieQuery.sort_by,
+          sort_by: movieQuery.sort,
           with_watch_providers:
-            movieQuery.with_watch_providers === -1
-              ? null
-              : movieQuery.with_watch_providers,
-          primary_release_year: movieQuery.primary_release_year,
-          query: movieQuery.query || null,
+            movieQuery.watchProvider === -1 ? null : movieQuery.watchProvider,
+          primary_release_year: movieQuery.year,
+          query: movieQuery.search || null,
           page: movieQuery.page,
         },
       }),

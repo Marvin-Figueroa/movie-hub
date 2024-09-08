@@ -1,11 +1,7 @@
 import { Select } from "antd";
 import watchProviders from "../data/providers";
 import styled from "styled-components";
-
-interface Props {
-  onSelectWatchProvider: (watchProvider: number) => void;
-  selectedWatchProvider?: number;
-}
+import useMovieQueryStore from "../store";
 
 const CustomSelect = styled(Select)`
   width: 100%;
@@ -20,16 +16,18 @@ const options = [
   })),
 ];
 
-const WatchProviderSelector = ({
-  onSelectWatchProvider,
-  selectedWatchProvider,
-}: Props) => {
+const WatchProviderSelector = () => {
+  const selectedWatchProvider = useMovieQueryStore(
+    (s) => s.movieQuery.watchProvider
+  );
+  const setWatchProviderId = useMovieQueryStore((s) => s.setWatchProviderId);
+
   return (
     <CustomSelect
       value={options.find(
         (option) => option.value === (selectedWatchProvider || -1)
       )}
-      onSelect={(_, option) => onSelectWatchProvider(option.value)}
+      onSelect={(_, option) => setWatchProviderId(option.value)}
       options={options}
     />
   );

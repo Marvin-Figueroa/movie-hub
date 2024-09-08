@@ -1,11 +1,7 @@
 import { Select } from "antd";
 import genres from "../data/genres";
 import styled from "styled-components";
-
-interface Props {
-  selectedGenre?: number;
-  onSelectGenre: (genre: number) => void;
-}
+import useMovieQueryStore from "../store";
 
 const options = [
   { value: -1, label: "All Genres" },
@@ -20,11 +16,14 @@ const CustomSelect = styled(Select)`
   min-width: 130px;
 `;
 
-const GenreSelector = ({ selectedGenre, onSelectGenre }: Props) => {
+const GenreSelector = () => {
+  const selectedGenre = useMovieQueryStore((s) => s.movieQuery.genre);
+  const setGenreId = useMovieQueryStore((s) => s.setGenreId);
+
   return (
     <CustomSelect
       value={options.find((option) => option.value === (selectedGenre || -1))}
-      onSelect={(_, option) => onSelectGenre(option.value)}
+      onSelect={(_, option) => setGenreId(option.value)}
       options={options}
     />
   );

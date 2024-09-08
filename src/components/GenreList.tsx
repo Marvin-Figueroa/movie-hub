@@ -1,11 +1,7 @@
 import { List, Button } from "antd";
 import { useGenres } from "../hooks/useGenres";
 import styled from "styled-components";
-
-interface Props {
-  selectedGenre?: number;
-  onSelectGenre: (genre: number) => void;
-}
+import useMovieQueryStore from "../store";
 
 const CustomButton = styled(Button)<{ selected: boolean }>`
   &&&& {
@@ -16,7 +12,9 @@ const CustomButton = styled(Button)<{ selected: boolean }>`
   }
 `;
 
-const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
+const GenreList = () => {
+  const selectedGenre = useMovieQueryStore((s) => s.movieQuery.genre);
+  const setGenreId = useMovieQueryStore((s) => s.setGenreId);
   const { data } = useGenres();
 
   return (
@@ -28,7 +26,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
           <CustomButton
             selected={selectedGenre === genre.id}
             size="small"
-            onClick={() => onSelectGenre(genre.id)}
+            onClick={() => setGenreId(genre.id)}
             type="text"
           >
             {genre.name}

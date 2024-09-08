@@ -3,6 +3,7 @@ import logo from "../assets/movie-database-logo.svg";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { SearchOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+import useMovieQueryStore from "../store";
 
 const { Search } = Input;
 
@@ -10,7 +11,6 @@ interface Props {
   darkMode: boolean;
   toggleDarkMode: () => void;
   loading: boolean;
-  onSearch: (searchText: string) => void;
   onActiveSearch: () => void;
 }
 
@@ -29,18 +29,18 @@ const NavBar = ({
   darkMode,
   toggleDarkMode,
   loading,
-  onSearch,
   onActiveSearch,
 }: Props) => {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
+  const setSearchText = useMovieQueryStore((s) => s.setSearchText);
 
   return (
     <Flex justify="space-between" align="center">
       <Image preview={false} width={screens.md ? 150 : 100} src={logo} />
       <CustomSearch
         placeholder="Search movies by title..."
-        onSearch={(value) => onSearch(value)}
+        onSearch={setSearchText}
         size="large"
         allowClear
         loading={loading}

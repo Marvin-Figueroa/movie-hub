@@ -3,11 +3,7 @@ import { Typography } from "antd";
 
 import genres from "../data/genres";
 import watchProviders from "../data/providers";
-import { MovieQuery } from "../App";
-
-interface Props {
-  movieQuery: MovieQuery;
-}
+import useMovieQueryStore from "../store";
 
 const CustomTitle = styled(Typography.Title)`
   && {
@@ -16,10 +12,12 @@ const CustomTitle = styled(Typography.Title)`
   }
 `;
 
-const MovieHeading = ({ movieQuery }: Props) => {
-  const selectedGenre = genres.find((g) => g.id === movieQuery.with_genres);
+const MovieHeading = () => {
+  const movieQuery = useMovieQueryStore((s) => s.movieQuery);
+
+  const selectedGenre = genres.find((g) => g.id === movieQuery.genre);
   const selectedProvider = watchProviders.find(
-    (provider) => provider.provider_id === movieQuery.with_watch_providers
+    (provider) => provider.provider_id === movieQuery.watchProvider
   );
 
   const watchProvider = selectedProvider?.provider_name

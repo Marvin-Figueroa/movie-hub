@@ -1,28 +1,24 @@
 import { ConfigProvider, Grid, Layout, Space, theme, Typography } from "antd";
-import { Header, Content } from "antd/es/layout/layout";
+import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import NavBar from "./components/NavBar";
-import { useState } from "react";
 import MovieGrid from "./components/MovieGrid";
 import GenreList from "./components/GenreList";
 import WatchProviderSelector from "./components/WatchProviderSelector";
 import SortSelector from "./components/SortSelector";
-import { useMovies } from "./hooks/useMovies";
 import MovieHeading from "./components/MovieHeading";
 import GenreSelector from "./components/GenreSelector";
 import PageFooter from "./components/PageFooter";
 import Pagination from "./components/Pagination";
 import YearSelector from "./components/YearSelector";
-import MobileSearch from "./components/MobileSearch";
+import useMovieQueryStore from "./store";
+import Header from "./components/Header";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 
 function App() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-  const [darkMode, setDarkMode] = useState(false);
-  const [mobileSearchIsActive, setMobileSearchIsActive] = useState(false);
-  const { data, isLoading } = useMovies();
+  const darkMode = useMovieQueryStore((s) => s.darkMode);
   const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
 
   return (
@@ -35,29 +31,7 @@ function App() {
       }}
     >
       <Layout>
-        <Header
-          style={{
-            ...customStyle,
-            padding: `${screens.lg ? "0 50px" : "0 20px"}`,
-          }}
-        >
-          {mobileSearchIsActive && !screens.md && (
-            <MobileSearch
-              isLoading={isLoading}
-              setMobileSearchActive={(isActive) =>
-                setMobileSearchIsActive(isActive)
-              }
-            />
-          )}
-          {(!mobileSearchIsActive || screens.md) && (
-            <NavBar
-              darkMode={darkMode}
-              toggleDarkMode={() => setDarkMode(!darkMode)}
-              loading={isLoading}
-              onActiveSearch={() => setMobileSearchIsActive(true)}
-            />
-          )}
-        </Header>
+        <Header />
         <Layout>
           <Sider
             style={{
@@ -98,11 +72,11 @@ function App() {
               <SortSelector />
               <YearSelector />
             </Space>
-            <MovieGrid loading={isLoading} movies={data?.results} />
+            <MovieGrid />
           </Content>
         </Layout>
         <Layout style={{ ...customStyle }}>
-          <Pagination isLoading={isLoading} totalItems={data?.total_results} />
+          <Pagination />
         </Layout>
         <PageFooter />
       </Layout>

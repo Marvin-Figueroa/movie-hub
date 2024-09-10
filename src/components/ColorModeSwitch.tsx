@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { MoonFilled, SunFilled } from "@ant-design/icons";
 import { Switch } from "antd";
-
-interface Props {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-}
+import useMovieQueryStore from "../store";
 
 const StyledSwitch = styled(Switch)`
   background-color: #15b7db;
@@ -16,11 +12,13 @@ const Icon = styled.span`
   color: #fff;
 `;
 
-const ColorModeSwitch = ({ darkMode, toggleDarkMode }: Props) => {
+const ColorModeSwitch = () => {
+  const { darkMode, setDarkMode } = useMovieQueryStore();
+
   return (
     <StyledSwitch
       checked={darkMode}
-      onChange={toggleDarkMode}
+      onChange={() => setDarkMode(!darkMode)}
       checkedChildren={<Icon as={MoonFilled} />}
       unCheckedChildren={<Icon as={SunFilled} />}
     />

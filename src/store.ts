@@ -1,7 +1,11 @@
 import { create } from "zustand";
 
 interface MovieQueryStore {
+  darkMode: boolean;
+  mobileSearchIsActive: boolean;
   movieQuery: MovieQuery;
+  setDarkMode: (darkMode: boolean) => void;
+  setMobileSearchIsActive: (isActive: boolean) => void;
   setGenreId: (genreId: number) => void;
   setWatchProviderId: (watchProviderId: number) => void;
   setSearchText: (searchText: string) => void;
@@ -20,6 +24,11 @@ interface MovieQuery {
 }
 
 const useMovieQueryStore = create<MovieQueryStore>((set) => ({
+  darkMode: false,
+  mobileSearchIsActive: false,
+  setDarkMode: (darkMode) => set({ darkMode }),
+  setMobileSearchIsActive: (isActive) =>
+    set({ mobileSearchIsActive: isActive }),
   movieQuery: {},
   setGenreId: (genreId) =>
     set((store) => ({

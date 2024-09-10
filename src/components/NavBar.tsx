@@ -4,15 +4,9 @@ import ColorModeSwitch from "./ColorModeSwitch";
 import { SearchOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import useMovieQueryStore from "../store";
+import { useMovies } from "../hooks/useMovies";
 
 const { Search } = Input;
-
-interface Props {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-  loading: boolean;
-  onActiveSearch: () => void;
-}
 
 const CustomButton = styled(Button)<{ isMdScreen?: boolean }>`
   && {
@@ -25,15 +19,14 @@ const CustomSearch = styled(Search)<{ isMdScreen?: boolean }>`
   display: ${({ isMdScreen }) => (isMdScreen ? "block" : "none")};
 `;
 
-const NavBar = ({
-  darkMode,
-  toggleDarkMode,
-  loading,
-  onActiveSearch,
-}: Props) => {
+const NavBar = () => {
+  const { isLoading } = useMovies();
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
   const setSearchText = useMovieQueryStore((s) => s.setSearchText);
+  const setMobileSearchIsActive = useMovieQueryStore(
+    (s) => s.setMobileSearchIsActive
+  );
 
   return (
     <Flex justify="space-between" align="center">
@@ -43,17 +36,17 @@ const NavBar = ({
         onSearch={setSearchText}
         size="large"
         allowClear
-        loading={loading}
+        loading={isLoading}
         isMdScreen={screens.md}
       />
       <Space size={screens.sm ? "large" : "middle"}>
         <CustomButton
-          onClick={onActiveSearch}
+          onClick={() => setMobileSearchIsActive(true)}
           shape="circle"
           icon={<SearchOutlined />}
           isMdScreen={screens.md}
         />
-        <ColorModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        <ColorModeSwitch />
       </Space>
     </Flex>
   );

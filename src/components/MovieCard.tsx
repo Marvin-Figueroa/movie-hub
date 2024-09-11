@@ -4,10 +4,23 @@ const { Meta } = Card;
 
 import { Movie } from "../hooks/useMovies";
 import VoteScore from "./VoteScore";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 interface Props {
   movie: Movie;
 }
+
+const StyledLink = styled(Link)`
+  &&& {
+    font-size: 16px;
+    color: inherit;
+
+    &:hover {
+      color: #15b7db;
+    }
+  }
+`;
 
 export const MovieCard = ({ movie }: Props) => {
   return (
@@ -29,7 +42,9 @@ export const MovieCard = ({ movie }: Props) => {
       }
     >
       <Meta
-        title={movie.title}
+        title={
+          <StyledLink to={`/movies/${movie.id}`}>{movie.title}</StyledLink>
+        }
         description={
           <>
             <p>{movie.release_date || "N/A"}</p>

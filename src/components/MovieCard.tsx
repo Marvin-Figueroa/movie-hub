@@ -2,7 +2,7 @@ import { Card, Image } from "antd";
 
 const { Meta } = Card;
 
-import { Movie } from "../hooks/useMovies";
+import { Movie } from "../types/Movie";
 import VoteScore from "./VoteScore";
 import { Link } from "react-router-dom";
 import styled from "styled-components";

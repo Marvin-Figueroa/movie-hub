@@ -3,11 +3,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import APIClient from "../services/apiClient";
 import genres from "../data/genres";
-
-export interface Genre {
-  id: number;
-  name: string;
-}
+import { Genre } from "../types/Genre";
 
 export interface FetchGenresResponse {
   genres: Genre[];

@@ -3,15 +3,7 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import APIClient from "../services/apiClient";
 import useMovieQueryStore from "../store";
-
-export interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  release_date: string;
-  overview: string;
-  vote_average: number;
-}
+import { Movie } from "../types/Movie";
 
 interface FetchMoviesResponse {
   page: number;

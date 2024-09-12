@@ -3,6 +3,7 @@ import { useMovie } from "../hooks/useMovie";
 import { Spin } from "antd";
 import ProductionCompanyList from "../components/ProductionCompanyList";
 import MovieImagesCarousel from "../components/MovieImagesCarousel";
+import GenreTagList from "../components/GenreTagList";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const MovieDetailPage = () => {
       <h3>{data?.title}</h3>
       <h5>{data?.tagline}</h5>
       <p>{data?.overview}</p>
+      {data?.genres && <GenreTagList genres={data.genres} />}
       <MovieImagesCarousel movieId={parseInt(id!)} />
       {data?.production_companies && (
         <ProductionCompanyList companies={data?.production_companies} />

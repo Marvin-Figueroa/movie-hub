@@ -10,7 +10,7 @@ const ProductionCompanyList = ({ companies }: Props) => {
     <Space size="middle" wrap>
       {companies.map((company) =>
         company.logo_path ? (
-          <Tooltip title={company.name}>
+          <Tooltip key={company.id} title={company.name}>
             <Tag color="#15b7db" style={{ padding: "5px" }}>
               <Image
                 alt={company.name}

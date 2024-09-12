@@ -16,4 +16,5 @@ export interface MovieDetail {
   video: boolean;
   runtime: number;
   backdrop_path: string;
+  vote_count: number;
 }

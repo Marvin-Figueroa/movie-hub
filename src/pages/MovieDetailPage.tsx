@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import ProductionCompanyList from "../components/ProductionCompanyList";
 import MovieImagesCarousel from "../components/MovieImagesCarousel";
 import GenreTagList from "../components/GenreTagList";
+import MovieInfo from "../components/MovieInfo";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const MovieDetailPage = () => {
 
   if (isLoading) return <Spin size="large" />;
 
-  if (error) throw error;
+  if (!data || error) throw error;
 
   return (
     <>
@@ -20,6 +21,7 @@ const MovieDetailPage = () => {
       <p>{data?.overview}</p>
       {data?.genres && <GenreTagList genres={data.genres} />}
       <MovieImagesCarousel movieId={parseInt(id!)} />
+      <MovieInfo movie={data} />
       {data?.production_companies && (
         <ProductionCompanyList companies={data?.production_companies} />
       )}

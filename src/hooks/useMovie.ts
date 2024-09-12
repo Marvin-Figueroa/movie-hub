@@ -7,10 +7,10 @@ import { MovieDetail } from "../types/MovieDetail";
 dayjs.extend(duration);
 
 export const useMovie = (movieId: number | string) => {
-  const apiClient = new APIClient<MovieDetail>("/movie");
+  const apiClient = new APIClient<MovieDetail>(`/movie/${movieId}`);
 
   return useQuery<MovieDetail, Error>({
     queryKey: ["movies", movieId],
-    queryFn: () => apiClient.get(movieId),
+    queryFn: () => apiClient.get(),
   });
 };

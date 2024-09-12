@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import PageFooter from "../components/PageFooter";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import useMovieQueryStore from "../store";
 
 const LayoutContainer = styled(AntdLayout)`
   min-height: 100vh;
@@ -15,10 +16,13 @@ const Content = styled(AntdLayout.Content)`
 `;
 
 const Layout = () => {
+  const darkMode = useMovieQueryStore((s) => s.darkMode);
+  const customStyle = { backgroundColor: darkMode ? "#0d253f" : "#fff" };
+
   return (
     <LayoutContainer>
       <Header />
-      <Content>
+      <Content style={customStyle}>
         <Outlet />
       </Content>
       <PageFooter />

@@ -4,6 +4,7 @@ import { ProductionCompany } from "../types/ProductionCompany";
 export interface MovieDetail {
   id: number;
   title: string;
+  tagline: string;
   poster_path: string;
   release_date: string;
   overview: string;

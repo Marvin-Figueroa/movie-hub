@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useMovie } from "../hooks/useMovie";
 import { Spin } from "antd";
+import ProductionCompanyList from "../components/ProductionCompanyList";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
@@ -13,7 +14,11 @@ const MovieDetailPage = () => {
   return (
     <>
       <h3>{data?.title}</h3>
+      <h5>{data?.tagline}</h5>
       <p>{data?.overview}</p>
+      {data?.production_companies && (
+        <ProductionCompanyList companies={data?.production_companies} />
+      )}
     </>
   );
 };

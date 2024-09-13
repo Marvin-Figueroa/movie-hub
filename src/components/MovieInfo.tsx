@@ -7,6 +7,11 @@ import {
   LikeOutlined,
   LineChartOutlined,
 } from "@ant-design/icons";
+import styled from "styled-components";
+
+const StyledFlex = styled(Flex)``;
+
+const valueStyle = { color: "#15b7db", fontSize: "1.2rem", fontWeight: "600" };
 
 interface Props {
   movie: MovieDetail;
@@ -14,52 +19,48 @@ interface Props {
 
 const MovieInfo = ({ movie }: Props) => {
   return (
-    <Flex gap="4rem">
-      <Flex vertical gap="2rem">
-        <Statistic
-          title="Votes"
-          value={movie.vote_count}
-          precision={0}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={<LikeOutlined />}
-        />
-        <Statistic
-          title="Budget"
-          value={movie.budget}
-          precision={2}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={"$"}
-        />
-        <Statistic
-          title="Runtime"
-          value={formatDurationFromMinutes(movie.runtime)}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={<ClockCircleOutlined />}
-        />
-      </Flex>
-      <Flex vertical gap="2rem">
-        <Statistic
-          title="Average Rating"
-          precision={1}
-          value={movie.vote_average}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={<LineChartOutlined />}
-        />
-        <Statistic
-          title="Revenue"
-          value={movie.revenue}
-          precision={2}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={"$"}
-        />
-        <Statistic
-          title="Release Date"
-          value={movie.release_date}
-          valueStyle={{ color: "#15b7db" }}
-          prefix={<CalendarOutlined />}
-        />
-      </Flex>
-    </Flex>
+    <StyledFlex wrap="wrap" gap="2rem">
+      <Statistic
+        title="Budget"
+        value={movie.budget}
+        precision={2}
+        valueStyle={valueStyle}
+        prefix={"$"}
+      />
+      <Statistic
+        title="Revenue"
+        value={movie.revenue}
+        precision={2}
+        valueStyle={valueStyle}
+        prefix={"$"}
+      />
+      <Statistic
+        title="Votes"
+        value={movie.vote_count}
+        precision={0}
+        valueStyle={valueStyle}
+        prefix={<LikeOutlined />}
+      />
+      <Statistic
+        title="Average Rating"
+        precision={1}
+        value={movie.vote_average}
+        valueStyle={valueStyle}
+        prefix={<LineChartOutlined />}
+      />
+      <Statistic
+        title="Runtime"
+        value={formatDurationFromMinutes(movie.runtime)}
+        valueStyle={valueStyle}
+        prefix={<ClockCircleOutlined />}
+      />
+      <Statistic
+        title="Release Date"
+        value={movie.release_date}
+        valueStyle={valueStyle}
+        prefix={<CalendarOutlined />}
+      />
+    </StyledFlex>
   );
 };
 

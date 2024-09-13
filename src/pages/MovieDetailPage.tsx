@@ -2,10 +2,10 @@ import { useParams } from "react-router-dom";
 import { useMovie } from "../hooks/useMovie";
 import { Flex, Grid, Spin, Typography } from "antd";
 import ProductionCompanyList from "../components/ProductionCompanyList";
-import MovieImagesCarousel from "../components/MovieImagesCarousel";
 import GenreTagList from "../components/GenreTagList";
 import MovieInfo from "../components/MovieInfo";
 import styled from "styled-components";
+import MovieTrailer from "../components/MovieTrailer";
 
 const StyledTitle = styled(Typography.Title)`
   && {
@@ -67,7 +67,7 @@ const MovieDetailPage = () => {
         <ProductionCompanyList companies={data?.production_companies} />
       </StyledFlexItem>
       <StyledFlexItem vertical gap="1.5rem">
-        <MovieImagesCarousel movieId={parseInt(id!)} />
+        <MovieTrailer movieId={data.id} />
         <MovieInfo movie={data} />
       </StyledFlexItem>
     </StyledFlex>

@@ -2,7 +2,7 @@ import { Carousel, Grid, Image } from "antd";
 import { useMovieImages } from "../hooks/useMovieImages";
 
 interface Props {
-  movieId: number;
+  movieId: number | string;
 }
 
 const MovieImagesCarousel = ({ movieId }: Props) => {

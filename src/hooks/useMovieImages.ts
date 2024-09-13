@@ -16,6 +16,6 @@ export const useMovieImages = (movieId: number | string) => {
 
   return useQuery<FetchMovieImagesResponse, Error>({
     queryKey: ["movies", movieId, "images"],
-    queryFn: () => apiClient.get(),
+    queryFn: () => apiClient.getAll(),
   });
 };

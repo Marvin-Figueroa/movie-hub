@@ -5,6 +5,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import useMovieQueryStore from "../store";
 import { useMovies } from "../hooks/useMovies";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -20,6 +21,7 @@ const CustomSearch = styled(Search)<{ isMdScreen?: boolean }>`
 `;
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const { isLoading } = useMovies();
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -30,10 +32,15 @@ const NavBar = () => {
 
   return (
     <Flex justify="space-between" align="center">
-      <Image preview={false} width={screens.md ? 150 : 100} src={logo} />
+      <Link to="/">
+        <Image preview={false} width={screens.md ? 150 : 100} src={logo} />
+      </Link>
       <CustomSearch
         placeholder="Search movies by title..."
-        onSearch={setSearchText}
+        onSearch={(searchText) => {
+          setSearchText(searchText);
+          navigate("/");
+        }}
         size="large"
         allowClear
         loading={isLoading}

@@ -6,6 +6,7 @@ import GenreTagList from "../components/GenreTagList";
 import MovieInfo from "../components/MovieInfo";
 import styled from "styled-components";
 import MovieTrailer from "../components/MovieTrailer";
+import MovieImageGallery from "../components/MovieImageGallery";
 
 const StyledTitle = styled(Typography.Title)`
   && {
@@ -58,19 +59,22 @@ const MovieDetailPage = () => {
   if (!data || error) throw error;
 
   return (
-    <StyledFlex gap={screens.lg ? "6rem" : "4rem"}>
-      <StyledFlexItem vertical gap="2rem">
-        <StyledTitle level={2}>{data.title}</StyledTitle>
-        {data.tagline && <StyledTitle level={4}>{data.tagline}</StyledTitle>}
-        <StyledText>{data.overview}</StyledText>
-        <GenreTagList genres={data.genres} />
-        <ProductionCompanyList companies={data?.production_companies} />
-      </StyledFlexItem>
-      <StyledFlexItem vertical gap="1.5rem">
-        <MovieTrailer movieId={data.id} />
-        <MovieInfo movie={data} />
-      </StyledFlexItem>
-    </StyledFlex>
+    <>
+      <StyledFlex gap={screens.lg ? "6rem" : "4rem"}>
+        <StyledFlexItem vertical gap="2rem">
+          <StyledTitle level={2}>{data.title}</StyledTitle>
+          {data.tagline && <StyledTitle level={4}>{data.tagline}</StyledTitle>}
+          <StyledText>{data.overview}</StyledText>
+          <GenreTagList genres={data.genres} />
+          <ProductionCompanyList companies={data?.production_companies} />
+        </StyledFlexItem>
+        <StyledFlexItem vertical gap="1.5rem">
+          <MovieTrailer movieId={data.id} />
+          <MovieInfo movie={data} />
+        </StyledFlexItem>
+      </StyledFlex>
+      <MovieImageGallery movieId={data.id} />
+    </>
   );
 };
 

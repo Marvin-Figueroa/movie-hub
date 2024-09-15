@@ -1,30 +1,61 @@
-# React + TypeScript + Vite
+# Movie Hub - Powered By The Movie Database API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicacion web desarrollada en React, que consume la API de TMDB para mostrar informacion de peliculas, con la posibilidad de filtrarlas por nombre, genero, proveedor, anio y ademas ordenar los resultados por popularidad, titulo, fecha y ganancias. Ademas permite ver el detalle de cada pelicula seleccionada mostrando imagenes de la misma, las productoras, generos, un breve resumen y el trailer alojado en YouTube.
 
-Currently, two official plugins are available:
+## Tabla de contenidos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [El desafio](#el-desafio)
+- [Capturas](#capturas)
+- [Despliegue](#despliegue)
+- [Tecnologias utilizadas](#tecnologias-utilizadas)
 
-## Expanding the ESLint configuration
+## El desafio
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+La aplicacion debe permitir lo siguiente:
 
-- Configure the top-level `parserOptions` property like this:
+- Obtener todos las peliculas.
+- Obtener una pelicula por ID.
+- Obtener peliculas por nombre (búsqueda parcial).
+- Mostrar una lista paginada de las peliculas.
+- Incluye un campo de búsqueda para filtrar por nombre.
+- Filtrar las peliculas por genero, anio, plataforma proveedora.
+- Ordenar los resultados por popularidad, ganancias generadas, fecha de produccion, etc.
+- Implementación de rutas y navegación entre páginas.
+- Página de error 404 para rutas no encontradas.
+- Pagina de error personalizada para errores de la aplicacion.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Capturas
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Vista Desktop Inicial
+
+![](./screenshots/desktop-home-light.png)
+
+### Vista Desktop Detalle
+
+![](./screenshots/desktop-detail-dark.png)
+
+### Vista Tablet Detalle
+
+![](./screenshots/tablet-detail-dark.png)
+
+### Vista Telefono Detalle
+
+![](./screenshots/mobile-detail-dark.png)
+
+## Despliegue
+
+- Web App: [Desplegada en Vercel](https://movie-hub-six-iota.vercel.app/)
+
+## Tecnologias utilizadas
+
+- Vite
+- React
+- TypeScript
+- Custom Hooks
+- Axios
+- Zustand
+- React Router
+- Styled Components
+- Ant Design
+- React Query
+- dayjs

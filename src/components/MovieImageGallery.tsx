@@ -4,9 +4,8 @@ import styled from "styled-components";
 
 const StyledRow = styled(Row)`
   && {
-    width: 100%;
+    min-width: 100%;
     padding: 0.5rem 3rem 3rem 3rem;
-    height: 100%;
 
     @media (max-width: 600px) {
       padding: 0.5rem 1rem 3rem 1rem;
@@ -28,10 +27,11 @@ const MovieImageGallery = ({ movieId }: Props) => {
   if (error) throw error;
 
   return data && data.backdrops.length >= 4 ? (
-    <StyledRow justify="start" gutter={[16, 16]}>
+    <StyledRow gutter={[16, 16]}>
       {data?.backdrops.slice(0, 8).map((backdrop) => (
         <Col xs={24} sm={12} md={8} xl={6} xxl={4} key={backdrop.file_path}>
           <Image
+            width="100%"
             src={`${import.meta.env.VITE_APP_API_IMAGES_BASE_URL}/${
               screens.md ? "w780" : "w500"
             }/${backdrop.file_path}`}
